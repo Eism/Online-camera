@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Онлайн-камеры</string>
+    <string name="filter">filter</string>
+    <string name="info">info</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
