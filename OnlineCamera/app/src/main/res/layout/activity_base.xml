@@ -5,9 +5,29 @@
     android:id="@+id/activity_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.onlinecamera.BaseActivity">
+    tools:context="com.example.onlinecamera.BaseActivity"
+    android:background="@color/colorGreyDark">
 
     <include
         layout="@layout/toolbar_actionbar"/>
+
+    <FrameLayout
+        android:layout_width="304dp"
+        android:layout_height="match_parent"
+        android:id="@+id/contentFrag"
+        android:layout_marginTop="55dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/contentCard"
+        android:layout_alignTop="@+id/contentFrag"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp" />
+
 
 </RelativeLayout>

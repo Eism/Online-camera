@@ -91,7 +91,7 @@
         android:layout_marginTop="36dp"
         android:id="@+id/textView6"
         android:foregroundGravity="top|center"
-        android:gravity="center"
+        android:gravity="left|center"
         android:layout_below="@+id/textView5"
         android:layout_toRightOf="@+id/imageView4"
         android:layout_toEndOf="@+id/imageView4"

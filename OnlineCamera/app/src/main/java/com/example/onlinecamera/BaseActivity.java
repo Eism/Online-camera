@@ -1,5 +1,6 @@
 package com.example.onlinecamera;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,10 @@ import android.view.MenuItem;
 
 public class BaseActivity extends AppCompatActivity {
 
+    private FilterFragment filterFragment;
+    private FragmentTransaction ft;
+    private Boolean isFilterVisible= false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,8 +21,8 @@ public class BaseActivity extends AppCompatActivity {
 
         Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbal_actionbar);
         setSupportActionBar(mActionBarToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        filterFragment =new FilterFragment();
     }
 
     @Override
@@ -41,6 +46,24 @@ public class BaseActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_filter:
+                ft = getFragmentManager().beginTransaction();
+
+                if (!isFilterVisible) {
+                    ft.setCustomAnimations(R.anim.to_left,R.anim.to_right);
+                    //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.replace(R.id.contentFrag, filterFragment);
+                }else {
+                    ft.setCustomAnimations(R.anim.to_left,R.anim.to_right);
+                    //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                    ft.remove(filterFragment);
+                }
+
+                isFilterVisible=!isFilterVisible;
+
+                ft.commit();
+
+
             default:
                 return super.onOptionsItemSelected(item);
         }
