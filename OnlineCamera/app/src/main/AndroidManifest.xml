@@ -8,23 +8,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
-        <activity android:name=".BaseActivity">
+        <activity android:name=".activity.BaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".PreloaderActivity">
+        <activity android:name=".activity.PreloaderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AppInfoActivity">
+        <activity android:name=".activity.AppInfoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.onlinecamera.BaseActivity" />
-
+                android:value="com.example.onlinecamera.activity.BaseActivity" />
+        </activity>
+        <activity android:name=".activity.CardDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.onlinecamera.activity.BaseActivity" />
         </activity>
     </application>
 

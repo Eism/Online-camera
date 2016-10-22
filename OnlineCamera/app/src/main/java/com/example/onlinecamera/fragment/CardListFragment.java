@@ -1,6 +1,8 @@
-package com.example.onlinecamera;
+package com.example.onlinecamera.fragment;
 
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,18 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.onlinecamera.R;
+import com.example.onlinecamera.activity.BaseActivity;
+import com.example.onlinecamera.activity.CardDetailsActivity;
+
 /**
  * Created by ELNUR on 22.10.2016.
  */
 
 public class CardListFragment extends ListFragment {
+
+    private CameraListFragment cameraListFragment;
+    private FragmentTransaction ft;
 
     private final String[] catnames = new String[] { "Рыжик", "Барсик",
             "Мурзик", "Мурка", "Васька", "Томасина", "Бобик", "Кристина",
@@ -36,8 +45,9 @@ public class CardListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Toast.makeText(getActivity(),
-                getListView().getItemAtPosition(position).toString(),
-                Toast.LENGTH_LONG).show();
+        Long ID=id;
+
+        Intent intent = new Intent(getActivity(), CardDetailsActivity.class);
+        startActivity(intent);
     }
 }

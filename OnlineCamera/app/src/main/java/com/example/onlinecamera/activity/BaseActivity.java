@@ -1,19 +1,19 @@
-package com.example.onlinecamera;
+package com.example.onlinecamera.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.example.onlinecamera.fragment.CardListFragment;
+import com.example.onlinecamera.fragment.FilterFragment;
+import com.example.onlinecamera.R;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -88,5 +88,18 @@ public class BaseActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+//    @Override
+//    public void onBackPressed(){
+//        //super.onBackPressed();
+//
+//        finish();
+//    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("uiid","exit");
+        finish();
     }
 }

@@ -21,11 +21,12 @@
             android:title="@string/info"
             app:showAsAction="always"
             android:enabled="true"
-            android:checkable="true" />
+            android:checkable="false" />
         <item android:title="Item"
-            android:showAsAction="always"
+            app:showAsAction="always"
             android:id="@+id/action_coord"
             android:icon="@drawable/ic_location_black_24x24"
-            android:visible="true" />
+            android:visible="true"
+            android:enabled="true" />
     </group>
 </menu>
