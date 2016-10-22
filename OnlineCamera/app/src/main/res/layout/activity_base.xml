@@ -12,14 +12,6 @@
         layout="@layout/toolbar_actionbar"/>
 
     <FrameLayout
-        android:layout_width="304dp"
-        android:layout_height="match_parent"
-        android:id="@+id/contentFrag"
-        android:layout_marginTop="55dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-    </FrameLayout>
-    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/contentCard"
@@ -28,6 +20,16 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp" />
+
+    <FrameLayout
+        android:layout_width="304dp"
+        android:layout_height="match_parent"
+        android:id="@+id/contentFrag"
+        android:layout_marginTop="55dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:isScrollContainer="true">
+    </FrameLayout>
 
 
 </RelativeLayout>

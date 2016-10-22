@@ -7,12 +7,21 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class BaseActivity extends AppCompatActivity {
 
     private FilterFragment filterFragment;
     private FragmentTransaction ft;
     private Boolean isFilterVisible= false;
+
+    private CardListFragment cardListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,15 @@ public class BaseActivity extends AppCompatActivity {
         setSupportActionBar(mActionBarToolbar);
 
         filterFragment =new FilterFragment();
+        cardListFragment = new CardListFragment();
+
+        ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.contentCard,cardListFragment);
+        ft.commit();
+
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.contentFrag);
+        frameLayout.bringToFront();
+
     }
 
     @Override
@@ -47,16 +65,19 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_filter:
+
+                ListView listView = (ListView) findViewById(android.R.id.list);
+
                 ft = getFragmentManager().beginTransaction();
 
                 if (!isFilterVisible) {
+                    listView.setEnabled(false);
                     ft.setCustomAnimations(R.anim.to_left,R.anim.to_right);
-                    //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.replace(R.id.contentFrag, filterFragment);
                 }else {
                     ft.setCustomAnimations(R.anim.to_left,R.anim.to_right);
-                    //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                     ft.remove(filterFragment);
+                    listView.setEnabled(true);
                 }
 
                 isFilterVisible=!isFilterVisible;
