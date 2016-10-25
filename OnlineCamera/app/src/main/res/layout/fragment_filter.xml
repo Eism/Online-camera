@@ -1,0 +1,120 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="304dp"
+    android:layout_height="match_parent"
+    tools:context="com.example.onlinecamera.Filter1Fragment"
+    android:background="@color/colorPrimary">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Тип места"
+            android:layout_width="match_parent"
+            android:id="@+id/textView"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:gravity="left|center"
+            android:layout_marginLeft="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+
+        <Button
+            android:text="Все"
+            android:layout_width="match_parent"
+            android:id="@+id/buttonAll"
+            android:layout_below="@+id/textView"
+            android:layout_alignLeft="@+id/textView"
+            android:layout_alignStart="@+id/textView"
+            android:layout_marginTop="8dp"
+            android:layout_height="48dp"
+            android:gravity="left|center"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimary"
+            android:textAllCaps="false" />
+
+        <Button
+            android:text="Фильтр 1"
+            android:layout_width="match_parent"
+            android:id="@+id/buttonFilter1"
+            android:layout_height="48dp"
+            android:gravity="left|center"
+            android:layout_below="@+id/buttonAll"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/buttonAll"
+            android:layout_alignStart="@+id/buttonAll"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:background="@color/colorPrimary"
+            android:textAllCaps="false" />
+
+        <Button
+            android:text="Фильтр 2"
+            android:layout_width="match_parent"
+            android:id="@+id/buttonFilter2"
+            android:layout_height="48dp"
+            android:gravity="left|center"
+            android:layout_below="@+id/buttonFilter1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/buttonFilter1"
+            android:layout_alignStart="@+id/buttonFilter1"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:background="@color/colorPrimary"
+            android:textAllCaps="false" />
+
+        <Button
+            android:text="Фильтр 3"
+            android:layout_width="match_parent"
+            android:id="@+id/buttonFilter3"
+            android:layout_height="48dp"
+            android:gravity="left|center"
+            android:layout_below="@+id/buttonFilter2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/buttonFilter2"
+            android:layout_alignStart="@+id/buttonFilter2"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:background="@color/colorPrimary"
+            android:textAllCaps="false" />
+
+        <View android:background="#d07d1a"
+            android:layout_width = "match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <View android:background="#d07d1a"
+            android:layout_width = "match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="135dp"
+            app:srcCompat="@drawable/ic_sky_filter_bg"
+            android:id="@+id/imageView7"
+            tools:ignore="VectorDrawableCompat"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+</FrameLayout>

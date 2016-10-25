@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="346dp">
+
+    <TextView
+        android:text="Текст 1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleCard"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:textColor="#89000000"
+        android:textSize="14sp"
+        android:gravity="left|center" />
+
+    <TextView
+        android:text="Текст 2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleCard"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/subTitleCard"
+        android:textColor="#dd000000"
+        android:textSize="16sp"
+        android:gravity="left|center" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        app:srcCompat="@color/colorPrimary"
+        android:layout_below="@+id/subTitleCard"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:id="@+id/imagePreviewCamera" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_play_circle_white_48x48"
+        android:layout_alignTop="@+id/imagePreviewCamera"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:id="@+id/imagePlay"
+        tools:ignore="VectorDrawableCompat" />
+
+    <TextView
+        android:text="Город, название улицы"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imagePreviewCamera"
+        android:layout_alignLeft="@+id/subTitleCard"
+        android:layout_alignStart="@+id/subTitleCard"
+        android:layout_marginTop="16dp"
+        android:id="@+id/adress"
+        android:layout_toLeftOf="@+id/imageCoord"
+        android:layout_toStartOf="@+id/imageCoord"
+        android:textColor="#dd000000"
+        android:textSize="16sp"
+        android:gravity="left|center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_location_orange_24x24"
+        android:layout_marginRight="13dp"
+        android:id="@+id/imageCoord"
+        android:layout_marginEnd="13dp"
+        android:layout_below="@+id/imagePreviewCamera"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <TextView
+        android:text="Номер дома или другой ориентир"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/subAdress"
+        android:textColor="#dd000000"
+        android:textSize="16sp"
+        android:gravity="left|center"
+        android:layout_below="@+id/adress"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@+id/imageCoord"
+        android:layout_toStartOf="@+id/imageCoord"
+        android:layout_marginLeft="16dp" />
+</RelativeLayout>
