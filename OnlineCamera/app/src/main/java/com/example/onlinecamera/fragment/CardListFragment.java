@@ -22,9 +22,6 @@ import com.example.onlinecamera.activity.CardDetailsActivity;
 
 public class CardListFragment extends ListFragment {
 
-    private CameraListFragment cameraListFragment;
-    private FragmentTransaction ft;
-
     private final String[] catnames = new String[] { "Рыжик", "Барсик",
             "Мурзик", "Мурка", "Васька", "Томасина", "Бобик", "Кристина",
             "Пушок", "Дымка", "Кузя", "Китти", "Барбос", "Масяня", "Симба" };

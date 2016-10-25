@@ -1,6 +1,7 @@
 package com.example.onlinecamera.activity;
 
 import android.app.FragmentTransaction;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,8 @@ public class CardDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_details);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbal_actionbar);
         setSupportActionBar(mActionBarToolbar);

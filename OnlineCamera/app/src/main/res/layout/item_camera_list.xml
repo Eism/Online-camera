@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/colorWhite"
-    android:layout_height="240dp">
+    android:layout_height="240dp"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
-        android:text="Камера"
+        android:text="@string/camera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/titleCamera"
@@ -15,7 +16,16 @@
         android:layout_marginLeft="16dp"
         android:textColor="@color/colorBlack87"
         android:textSize="14sp"
-        android:gravity="left|center" />
+        android:gravity="left|center"
+        tools:ignore="RtlHardcoded" />
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/imagePreviewCamera"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/webView1"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -34,5 +44,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp"
         android:id="@+id/imagePlayCamera"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        android:descendantFocusability="blocksDescendants"/>
+
+
 </RelativeLayout>

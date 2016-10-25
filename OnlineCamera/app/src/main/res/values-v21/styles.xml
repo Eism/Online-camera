@@ -1,1 +1,11 @@
-<resources></resources>
+<resources>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_black_24x24</item>
+    </style>
+</resources>

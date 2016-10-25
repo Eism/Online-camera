@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -40,6 +41,7 @@ public class BaseActivity extends AppCompatActivity {
 
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.contentFrag);
         frameLayout.bringToFront();
+
 
     }
 

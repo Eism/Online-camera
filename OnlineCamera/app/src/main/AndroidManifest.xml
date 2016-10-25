@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.onlinecamera">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,10 +32,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.onlinecamera.activity.BaseActivity" />
         </activity>
-        <activity android:name=".activity.CardDetailsActivity">
+        <activity
+            android:name=".activity.CardDetailsActivity"
+            android:hardwareAccelerated="true"
+            android:configChanges="keyboardHidden|orientation">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.onlinecamera.activity.BaseActivity" />
+        </activity>
+        <activity android:name=".activity.ErrorActivity" />
+        <activity android:name=".activity.PlayerActivity"
+            android:configChanges="keyboardHidden|orientation">
+
         </activity>
     </application>
 
