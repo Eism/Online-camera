@@ -34,6 +34,9 @@ public class PlayerActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setPluginState(WebSettings.PluginState.ON);
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl("http://ru.webcams.travel/webcam/stream/1182089417?autoplay=1");
+        webView.loadUrl("http://ru.webcams.travel/webcam/stream/1437608431?autoplay=1");
+
+        //String frameVideo = "<html><body><iframe hight=\""+webView.getHeight()+"\" wight=\""+webView.getWidth()+"\" src=\"http://ru.webcams.travel/webcam/stream/1182089417?autoplay=1\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe></body></html>";
+        //webView.loadData(frameVideo, "text/html", "utf-8");
     }
 }

@@ -36,14 +36,15 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class CameraListFragment extends ListFragment {
 
-    private final String[] catnames = new String[] { "Рыжик", "Барсик",
+    private final String[] catnames = new String[]{"Рыжик", "Барсик",
             "Мурзик", "Мурка", "Васька", "Томасина", "Бобик", "Кристина",
-            "Пушок", "Дымка", "Кузя", "Китти", "Барбос", "Масяня", "Симба" };
+            "Пушок", "Дымка", "Кузя", "Китти", "Барбос", "Масяня", "Симба"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root= inflater.inflate(R.layout.camera_list, container, false);
+        View root = inflater.inflate(R.layout.camera_list, container, false);
+
 
         ListAdapter myListAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.item_camera_list, R.id.titleCamera, catnames);
@@ -56,7 +57,7 @@ public class CameraListFragment extends ListFragment {
         return root;
     }
 
-    public void onCklikPlay(){
+    public void onCklikPlay() {
 
     }
 
@@ -104,34 +105,5 @@ public class CameraListFragment extends ListFragment {
         webView.setWebChromeClient(new WebChromeClient());
         webView.loadUrl("http://ru.webcams.travel/webcam/stream/1182089417");
         */
-    }
-
-    private class CallMashapeAsync extends AsyncTask<String, Integer, HttpResponse<JsonNode>> {
-
-        protected HttpResponse<JsonNode> doInBackground(String... msg) {
-
-            HttpResponse<JsonNode> request = null;
-            try {
-                request = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live")
-                        .header("X-Mashape-Key", "Fo4TeWno4vmshqokVApAI2DHB5aYp1u2kKvjsnyu1ZPsYirCD5")
-                        .asJson();
-            } catch (UnirestException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-
-
-            return request;
-        }
-
-        protected void onProgressUpdate(Integer...integers) {
-        }
-
-        protected void onPostExecute(HttpResponse<JsonNode> response) {
-            //String answer = response.getBody().toString();
-            //TextView txtView = (TextView) root.findViewById(R.id.titleCamera);
-            //txtView.setText(answer);
-        }
     }
 }

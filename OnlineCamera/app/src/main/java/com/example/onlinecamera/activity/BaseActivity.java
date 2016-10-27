@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.example.onlinecamera.CallMashapeAsync;
 import com.example.onlinecamera.fragment.CardListFragment;
 import com.example.onlinecamera.fragment.FilterFragment;
 import com.example.onlinecamera.R;
@@ -42,6 +43,7 @@ public class BaseActivity extends AppCompatActivity {
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.contentFrag);
         frameLayout.bringToFront();
 
+        //new CallMashapeAsync().execute();
 
     }
 
