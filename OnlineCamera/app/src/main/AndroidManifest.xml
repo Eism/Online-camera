@@ -15,11 +15,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
+
         <activity android:name=".activity.BaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.PreloaderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.AppInfoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.onlinecamera.activity.BaseActivity" />
         </activity>
+
         <activity
             android:name=".activity.CardDetailsActivity"
             android:hardwareAccelerated="true"
@@ -40,11 +44,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.onlinecamera.activity.BaseActivity" />
         </activity>
-        <activity android:name=".activity.ErrorActivity" />
+
+        <activity android:name=".activity.ErrorActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activity.PlayerActivity"
             android:configChanges="keyboardHidden|orientation">
-
         </activity>
+
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 package com.example.onlinecamera.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.onlinecamera.CallMashapeAsync;
 import com.example.onlinecamera.fragment.CardListFragment;
@@ -24,14 +27,16 @@ public class BaseActivity extends AppCompatActivity {
     private Boolean isFilterVisible= false;
 
     private CardListFragment cardListFragment;
+    private ProgressBar loadProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
         Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbal_actionbar);
         setSupportActionBar(mActionBarToolbar);
+
+        loadProgressBar = (ProgressBar) findViewById(R.id.loadProgressBar);
 
         filterFragment =new FilterFragment();
         cardListFragment = new CardListFragment();
@@ -40,11 +45,11 @@ public class BaseActivity extends AppCompatActivity {
         ft.replace(R.id.contentCard,cardListFragment);
         ft.commit();
 
+
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.contentFrag);
         frameLayout.bringToFront();
 
-        //new CallMashapeAsync().execute();
-
+        //new IsLoadedFragmentList().execute();
     }
 
     @Override
@@ -71,7 +76,6 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.action_filter:
 
                 ListView listView = (ListView) findViewById(android.R.id.list);
-
                 ft = getFragmentManager().beginTransaction();
 
                 if (!isFilterVisible) {
@@ -83,27 +87,36 @@ public class BaseActivity extends AppCompatActivity {
                     ft.remove(filterFragment);
                     listView.setEnabled(true);
                 }
-
                 isFilterVisible=!isFilterVisible;
-
                 ft.commit();
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-//    @Override
-//    public void onBackPressed(){
-//        //super.onBackPressed();
-//
-//        finish();
-//    }
-
     @Override
     public void onBackPressed() {
-        Log.d("uiid","exit");
         finish();
+    }
+
+    private class IsLoadedFragmentList extends AsyncTask<Void,Integer,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while (true) try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                break;
+            }
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer... integers) {
+        }
+
+        protected void onPostExecute(Boolean response) {
+            loadProgressBar.setVisibility(View.GONE);
+        }
     }
 }

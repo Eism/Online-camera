@@ -12,4 +12,11 @@ public class ErrorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error);
     }
+
+    @Override
+    public void onBackPressed() {
+        finishActivity(0);
+        finish();
+        moveTaskToBack(true);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.onlinecamera.activity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,12 @@ import android.webkit.WebView;
 
 import com.example.onlinecamera.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class PlayerActivity extends AppCompatActivity {
+
+    WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +35,30 @@ public class PlayerActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_FULLSCREEN);
 
-        WebView webView=(WebView) findViewById(R.id.webViewPlayer);
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("idCamera");
+
+        webView=(WebView) findViewById(R.id.webViewPlayer);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setPluginState(WebSettings.PluginState.ON);
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl("http://ru.webcams.travel/webcam/stream/1437608431?autoplay=1");
+        webView.loadUrl("http://ru.webcams.travel/webcam/stream/"+id+"");
+    }
 
-        //String frameVideo = "<html><body><iframe hight=\""+webView.getHeight()+"\" wight=\""+webView.getWidth()+"\" src=\"http://ru.webcams.travel/webcam/stream/1182089417?autoplay=1\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe></body></html>";
-        //webView.loadData(frameVideo, "text/html", "utf-8");
+    @Override
+    public void onBackPressed() {
+        destroyWebView();
+        finish();
+    }
+
+    public void destroyWebView() {
+
+        if(webView != null) {
+            webView.clearHistory();
+            webView.clearCache(true);
+            webView.loadUrl("about:blank");
+        }
+
     }
 }

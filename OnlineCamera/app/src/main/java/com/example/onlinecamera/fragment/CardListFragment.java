@@ -8,15 +8,23 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
 import com.example.onlinecamera.R;
+import com.example.onlinecamera.activity.BaseActivity;
 import com.example.onlinecamera.activity.CardDetailsActivity;
+import com.example.onlinecamera.activity.ErrorActivity;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -29,6 +37,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,11 +55,12 @@ public class CardListFragment extends ListFragment {
 
     private final String[] title = new String[6];
 
-    private Boolean error=false;
+    public Boolean isLoading = true;
+
+    private Boolean error = false;
     private Integer async = 0;
 
     private final JSONArray[] webcams1 = new JSONArray[4];
-    public ListView mList;
     boolean mListShown;
     View mProgressContainer;
     View mListContainer;
@@ -62,14 +72,22 @@ public class CardListFragment extends ListFragment {
     String[] imageCard;
     String[] otherInfoCard1;
     String[] otherInfoCard2;
+    Integer[] idCountry;
 
-    ArrayList<HashMap<String,String>> data= new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
     SimpleAdapter adapter;
+
+    private ProgressBar loadProgressBar;
+
+    View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.card_list, container, false);
+        v = inflater.inflate(R.layout.card_list, container, false);
+        isLoading = true;
+        loadProgressBar = (ProgressBar) v.findViewById(R.id.loadProgressBar);
+        loadProgressBar.setVisibility(View.VISIBLE);
 
         new CallMashapeAsync().execute();
 
@@ -80,142 +98,124 @@ public class CardListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Long ID=id;
+        Integer ID = ((Long) id).intValue();
 
         Intent intent = new Intent(getActivity(), CardDetailsActivity.class);
+        intent.putExtra("webcams", webcams1[ID].toString());
         startActivity(intent);
-    }
-
-    public void setListShown(boolean shown, boolean animate){
-        if (mListShown == shown) {
-            return;
-        }
-        mListShown = shown;
-        if (shown) {
-            if (animate) {
-                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_out));
-                mListContainer.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_in));
-            }
-            mProgressContainer.setVisibility(View.GONE);
-            mListContainer.setVisibility(View.VISIBLE);
-        } else {
-            if (animate) {
-                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_in));
-                mListContainer.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_out));
-            }
-            mProgressContainer.setVisibility(View.VISIBLE);
-            mListContainer.setVisibility(View.INVISIBLE);
-        }
-    }
-    public void setListShown(boolean shown){
-        setListShown(shown, true);
-    }
-    public void setListShownNoAnimation(boolean shown) {
-        setListShown(shown, false);
     }
 
     public class CallMashapeAsync extends AsyncTask<String, Integer, Boolean> {
 
         protected Boolean doInBackground(String... msg) {
 
-            Future<HttpResponse<JsonNode>> request = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.MS/limit=4,11?show=webcams:id,title,image,location")
+            Future<HttpResponse<JsonNode>> request = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.MS/limit=4,11?show=webcams:idCamera,title,image,location")
                     .header("X-Mashape-Key", "Fo4TeWno4vmshqokVApAI2DHB5aYp1u2kKvjsnyu1ZPsYirCD5")
                     .asJsonAsync(new Callback<JsonNode>() {
                         @Override
                         public void completed(HttpResponse<JsonNode> httpResponse) {
-                            async++;
+
                             try {
-                                webcams1[0] =httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams1[0] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
-                                error=true;
+                                error = true;
+                                async++;
                                 e.printStackTrace();
                             }
+                            async++;
                         }
 
                         @Override
                         public void failed(UnirestException e) {
-
+                            error = true;
+                            async++;
                         }
 
                         @Override
                         public void cancelled() {
-
+                            error = true;
+                            async++;
                         }
                     });
-            Future<HttpResponse<JsonNode>> request1 = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.TX/limit=7,0?show=webcams:id,title,image,location")
+            Future<HttpResponse<JsonNode>> request1 = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.TX/limit=7,0?show=webcams:idCamera,title,image,location")
                     .header("X-Mashape-Key", "Fo4TeWno4vmshqokVApAI2DHB5aYp1u2kKvjsnyu1ZPsYirCD5")
                     .asJsonAsync(new Callback<JsonNode>() {
                         @Override
                         public void completed(HttpResponse<JsonNode> httpResponse) {
-                            async++;
                             try {
-                                webcams1[1] =httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams1[1] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
-                                error=true;
+                                error = true;
+                                async++;
                                 e.printStackTrace();
                             }
+                            async++;
                         }
 
                         @Override
                         public void failed(UnirestException e) {
-
+                            error = true;
+                            async++;
                         }
 
                         @Override
                         public void cancelled() {
-
+                            error = true;
+                            async++;
                         }
                     });
-            Future<HttpResponse<JsonNode>> request2 = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.WY/limit=2,0?show=webcams:id,title,image,location")
+            Future<HttpResponse<JsonNode>> request2 = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.WY/limit=2,0?show=webcams:idCamera,title,image,location")
                     .header("X-Mashape-Key", "Fo4TeWno4vmshqokVApAI2DHB5aYp1u2kKvjsnyu1ZPsYirCD5")
                     .asJsonAsync(new Callback<JsonNode>() {
                         @Override
                         public void completed(HttpResponse<JsonNode> httpResponse) {
-                            async++;
                             try {
-                                webcams1[2] =httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams1[2] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
-                                error=true;
+                                error = true;
+                                async++;
                                 e.printStackTrace();
                             }
+                            async++;
                         }
 
                         @Override
                         public void failed(UnirestException e) {
-
+                            error = true;
+                            async++;
                         }
 
                         @Override
                         public void cancelled() {
-
+                            error = true;
+                            async++;
                         }
                     });
-            Future<HttpResponse<JsonNode>> request3 = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.CO/limit=5,0?show=webcams:id,title,image,location")
+            Future<HttpResponse<JsonNode>> request3 = Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.CO/limit=5,0?show=webcams:idCamera,title,image,location")
                     .header("X-Mashape-Key", "Fo4TeWno4vmshqokVApAI2DHB5aYp1u2kKvjsnyu1ZPsYirCD5")
                     .asJsonAsync(new Callback<JsonNode>() {
                         @Override
                         public void completed(HttpResponse<JsonNode> httpResponse) {
-                            async++;
                             try {
-                                webcams1[3] =httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams1[3] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
-                                error=true;
+                                error = true;
+                                async++;
                                 e.printStackTrace();
                             }
+                            async++;
                         }
 
                         @Override
                         public void failed(UnirestException e) {
-
+                            error = true;
+                            async++;
                         }
 
                         @Override
                         public void cancelled() {
-
+                            error = true;
+                            async++;
                         }
                     });
 
@@ -223,76 +223,28 @@ public class CardListFragment extends ListFragment {
             while (true) {
                 if (async == 4) {
                     if (error) {
-
+                        break;
                     } else {
 
-                        Integer lenght = webcams1[0].length() + webcams1[1].length() + webcams1[2].length() + webcams1[3].length();
-                        id = new String[lenght];
-                        statusCard = new String[lenght];
-                        titleCard = new String[lenght];
-                        imageCard = new String[lenght];
-                        otherInfoCard1 = new String[lenght];
-                        otherInfoCard2 = new String[lenght];
+                        idCountry = new Integer[4];
+                        id = new String[4];
+                        statusCard = new String[4];
+                        titleCard = new String[4];
+                        imageCard = new String[4];
+                        otherInfoCard1 = new String[4];
+                        otherInfoCard2 = new String[4];
 
                         Integer l = 0;
-                        for (int i = 0; i < webcams1[0].length(); i++) {
-                            try {
-                                JSONObject jsonObject = webcams1[0].getJSONObject(i);
 
-                                id[l] = jsonObject.get("id").toString();
-                                statusCard[l] = jsonObject.get("status").toString();
-                                titleCard[l] = jsonObject.get("title").toString();
+                        for(int i=0;i<4;i++){
+                            idCountry[i]=i;
+                            try {
+                                JSONObject jsonObject = webcams1[i].getJSONObject(0);
+                                statusCard[i]=jsonObject.get("status").toString();
+                                titleCard[l] = jsonObject.getJSONObject("location").get("region").toString();
                                 imageCard[l] = jsonObject.getJSONObject("image").getJSONObject("current").get("preview").toString();
                                 otherInfoCard1[l] = jsonObject.getJSONObject("location").get("continent").toString();
-                                otherInfoCard2[l++] = jsonObject.getJSONObject("location").get("country").toString() + jsonObject.getJSONObject("location").get("city").toString();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        for (int i = 0; i < webcams1[1].length(); i++) {
-                            try {
-                                JSONObject jsonObject = webcams1[1].getJSONObject(i);
-
-                                id[l] = jsonObject.get("id").toString();
-                                statusCard[l] = jsonObject.get("status").toString();
-                                titleCard[l] = jsonObject.get("title").toString();
-                                imageCard[l] = jsonObject.getJSONObject("image").getJSONObject("current").get("preview").toString();
-                                otherInfoCard1[l] = jsonObject.getJSONObject("location").get("continent").toString();
-                                otherInfoCard2[l++] = jsonObject.getJSONObject("location").get("country").toString() + jsonObject.getJSONObject("location").get("city").toString();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        for (int i = 0; i < webcams1[2].length(); i++) {
-                            try {
-                                JSONObject jsonObject = webcams1[2].getJSONObject(i);
-
-                                id[l] = jsonObject.get("id").toString();
-                                statusCard[l] = jsonObject.get("status").toString();
-                                titleCard[l] = jsonObject.get("title").toString();
-                                imageCard[l] = jsonObject.getJSONObject("image").getJSONObject("current").get("preview").toString();
-                                otherInfoCard1[l] = jsonObject.getJSONObject("location").get("continent").toString();
-                                otherInfoCard2[l++] = jsonObject.getJSONObject("location").get("country").toString() + jsonObject.getJSONObject("location").get("city").toString();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        for (int i = 0; i < webcams1[3].length(); i++) {
-                            try {
-                                JSONObject jsonObject = webcams1[3].getJSONObject(i);
-
-                                id[l] = jsonObject.get("id").toString();
-                                statusCard[l] = jsonObject.get("status").toString();
-                                titleCard[l] = jsonObject.get("title").toString();
-                                imageCard[l] = jsonObject.getJSONObject("image").getJSONObject("current").get("preview").toString();
-                                otherInfoCard1[l] = jsonObject.getJSONObject("location").get("continent").toString();
-                                otherInfoCard2[l++] = jsonObject.getJSONObject("location").get("country").toString() + jsonObject.getJSONObject("location").get("city").toString();
-
+                                otherInfoCard2[l++] = jsonObject.getJSONObject("location").get("country").toString();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -304,23 +256,30 @@ public class CardListFragment extends ListFragment {
             return true;
         }
 
-        protected void onProgressUpdate(Integer...integers) {
+        protected void onProgressUpdate(Integer... integers) {
         }
 
         protected void onPostExecute(Boolean response) {
 
-            GetBitmapFromURL bitm=new GetBitmapFromURL();
-            bitm.execute(imageCard);
+            if (error){
+                isLoading = false;
+                Intent intent = new Intent(getActivity(), ErrorActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }else {
+                GetBitmapFromURL bitm = new GetBitmapFromURL();
+                bitm.execute(imageCard);
+            }
         }
     }
 
-    public class GetBitmapFromURL extends AsyncTask<String[],Integer,Bitmap[]>{
+    public class GetBitmapFromURL extends AsyncTask<String[], Integer, Bitmap[]> {
         @Override
         protected Bitmap[] doInBackground(String[]... src) {
 
-            Bitmap[] bitmaps=new Bitmap[src[0].length];
+            Bitmap[] bitmaps = new Bitmap[src[0].length];
 
-            for (int i=0;i<src[0].length;i++) {
+            for (int i = 0; i < src[0].length; i++) {
                 try {
                     URL url = new URL(src[0][i]);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -328,7 +287,7 @@ public class CardListFragment extends ListFragment {
                     connection.connect();
                     InputStream inputStream = connection.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    bitmaps[i]=bitmap;
+                    bitmaps[i] = bitmap;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     return null;
@@ -340,30 +299,34 @@ public class CardListFragment extends ListFragment {
             return bitmaps;
         }
 
-        protected void onProgressUpdate(Integer...integers) {
+        protected void onProgressUpdate(Integer... integers) {
         }
 
         protected void onPostExecute(Bitmap[] response) {
 
-            HashMap<String,String> map = new HashMap<String, String>();
+            HashMap<String, String> map = new HashMap<String, String>();
 
-            for (int i=0;i<statusCard.length;i++){
-                map=new HashMap<String, String>();
-                map.put("status",statusCard[i]);
-                map.put("title",titleCard[i]);
-                Drawable d = new BitmapDrawable(getResources(),response[i]);
-                map.put("image", String.valueOf(d));
-                map.put("info1",otherInfoCard1[i]);
-                map.put("info2",otherInfoCard2[i]);
+            for (int i = 0; i < statusCard.length; i++) {
+                map = new HashMap<String, String>();
+                map.put("status", statusCard[i]);
+                map.put("title", titleCard[i]);
+                //Drawable d = new BitmapDrawable(getResources(), response[i]);
+                //map.put("image", String.valueOf(R.drawable.ic_arrow_back_black_24x24));
+                map.put("info1", otherInfoCard1[i]);
+                map.put("info2", otherInfoCard2[i]);
 
                 data.add(map);
             }
 
-            String[] from={"status","title","image","info1","info2"};
+            String[] from = {"status", "title",/* "image",*/ "info1", "info2"};
 
-            int[] to ={R.id.statusCard,R.id.titleCard,R.id.imagePreviewCamera,R.id.adress,R.id.subAdress};
+            int[] to = {R.id.statusCard, R.id.titleCard,/* R.id.imagePreviewCamera,*/ R.id.adress, R.id.subAdress};
 
-            adapter = new SimpleAdapter(getActivity(),data,R.layout.item_card_list,from,to);
+            adapter = new SimpleAdapter(getActivity(), data, R.layout.item_card_list, from, to);
+
+            isLoading = false;
+
+            loadProgressBar.setVisibility(View.GONE);
             setListAdapter(adapter);
 
         }
