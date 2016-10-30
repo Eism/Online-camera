@@ -30,6 +30,7 @@ public class CameraListFragment extends ListFragment {
             "Пушок", "Дымка", "Кузя", "Китти", "Барбос", "Масяня", "Симба"};
 
     private JSONArray webcams;
+    private Integer ID;
 
     String[] idCamera;
     String[] statusCamera;
@@ -37,6 +38,7 @@ public class CameraListFragment extends ListFragment {
     String[] imageCamera;
     String[] otherInfoCamera1;
     String[] otherInfoCamera2;
+
 
 
     ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -48,6 +50,7 @@ public class CameraListFragment extends ListFragment {
         View root = inflater.inflate(R.layout.camera_list, container, false);
 
         Bundle bundle=this.getArguments();
+        ID=bundle.getInt("id");
         if (null!= bundle){
             try {
                 webcams = new JSONArray(bundle.getString("webcams"));
@@ -77,22 +80,23 @@ public class CameraListFragment extends ListFragment {
                 }
 
                 HashMap<String, String> map = new HashMap<String, String>();
+                int[][] image = {{R.drawable.preview1,R.drawable.preview2,R.drawable.preview3,R.drawable.preview4},{R.drawable.preview5,R.drawable.preview6},{R.drawable.preview7,R.drawable.preview8},{R.drawable.preview9,R.drawable.preview10,R.drawable.preview11,R.drawable.preview12,R.drawable.preview13}};
 
                 for (int i = 0; i < statusCamera.length; i++) {
                     map = new HashMap<String, String>();
                     //map.put("status", statusCamera[i]);
                     map.put("title", titleCamera[i]);
                     //Drawable d = new BitmapDrawable(getResources(), imageCamera[i]);
-                    //map.put("image", String.valueOf(d));
+                    map.put("image", String.valueOf(image[ID][i]));
                     //map.put("info1", otherInfoCamera1[i]);
                     //map.put("info2", otherInfoCamera2[i]);
 
                     data.add(map);
                 }
 
-                String[] from = {/*"status",*/ "title",/* "image", "info1", "info2"*/};
+                String[] from = {/*"status",*/ "title", "image",/* "info1", "info2"*/};
 
-                int[] to = {/*R.id.statusCard,*/ R.id.titleCamera,/* R.idCamera.imagePreviewCamera,R.id.adress, R.id.subAdress*/ };
+                int[] to = {/*R.id.statusCard,*/ R.id.titleCamera, R.id.imagePreviewCamera,/*R.id.adress, R.id.subAdress*/ };
 
                 adapter = new SimpleAdapter(getActivity(), data, R.layout.item_camera_list, from, to);
                 setListAdapter(adapter);

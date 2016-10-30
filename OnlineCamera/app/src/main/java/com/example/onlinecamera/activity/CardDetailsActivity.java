@@ -37,6 +37,7 @@ public class CardDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String jsonArray = intent.getStringExtra("webcams");
+        Integer id =intent.getIntExtra("id",0);
         if (null != jsonArray) {
             try {
                 webcams = new JSONArray(jsonArray);
@@ -48,6 +49,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         cameraListFragment = new CameraListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("webcams", webcams.toString());
+        bundle.putInt("id",id);
         cameraListFragment.setArguments(bundle);
 
 

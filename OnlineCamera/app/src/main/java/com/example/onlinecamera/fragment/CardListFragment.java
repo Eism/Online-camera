@@ -52,27 +52,19 @@ import static com.example.onlinecamera.R.id.imageView;
  */
 
 public class CardListFragment extends ListFragment {
-
-    private final String[] title = new String[6];
-
     public Boolean isLoading = true;
 
     private Boolean error = false;
     private Integer async = 0;
 
     private final JSONArray[] webcams1 = new JSONArray[4];
-    boolean mListShown;
-    View mProgressContainer;
-    View mListContainer;
 
-
-    String[] id;
-    String[] statusCard;
-    String[] titleCard;
-    String[] imageCard;
-    String[] otherInfoCard1;
-    String[] otherInfoCard2;
-    Integer[] idCountry;
+    private String[] statusCard;
+    private String[] titleCard;
+    private String[] imageCard;
+    private String[] otherInfoCard1;
+    private String[] otherInfoCard2;
+    private Integer[] idCountry;
 
     ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
     SimpleAdapter adapter;
@@ -102,6 +94,7 @@ public class CardListFragment extends ListFragment {
 
         Intent intent = new Intent(getActivity(), CardDetailsActivity.class);
         intent.putExtra("webcams", webcams1[ID].toString());
+        intent.putExtra("id",ID);
         startActivity(intent);
     }
 
@@ -227,7 +220,6 @@ public class CardListFragment extends ListFragment {
                     } else {
 
                         idCountry = new Integer[4];
-                        id = new String[4];
                         statusCard = new String[4];
                         titleCard = new String[4];
                         imageCard = new String[4];
@@ -306,21 +298,20 @@ public class CardListFragment extends ListFragment {
 
             HashMap<String, String> map = new HashMap<String, String>();
 
+            int[][] image = {{R.drawable.preview1,R.drawable.preview2,R.drawable.preview3,R.drawable.preview4},{R.drawable.preview5,R.drawable.preview6},{R.drawable.preview7,R.drawable.preview8},{R.drawable.preview9,R.drawable.preview10,R.drawable.preview11,R.drawable.preview12,R.drawable.preview13}};
+
             for (int i = 0; i < statusCard.length; i++) {
                 map = new HashMap<String, String>();
                 map.put("status", statusCard[i]);
                 map.put("title", titleCard[i]);
-                //Drawable d = new BitmapDrawable(getResources(), response[i]);
-                //map.put("image", String.valueOf(R.drawable.ic_arrow_back_black_24x24));
+                map.put("image", String.valueOf(image[i][0]));
                 map.put("info1", otherInfoCard1[i]);
                 map.put("info2", otherInfoCard2[i]);
-
                 data.add(map);
             }
+            String[] from = {"status", "title", "image", "info1", "info2"};
 
-            String[] from = {"status", "title",/* "image",*/ "info1", "info2"};
-
-            int[] to = {R.id.statusCard, R.id.titleCard,/* R.id.imagePreviewCamera,*/ R.id.adress, R.id.subAdress};
+            int[] to = {R.id.statusCard, R.id.titleCard, R.id.imagePreviewCamera, R.id.adress, R.id.subAdress};
 
             adapter = new SimpleAdapter(getActivity(), data, R.layout.item_card_list, from, to);
 
@@ -328,9 +319,6 @@ public class CardListFragment extends ListFragment {
 
             loadProgressBar.setVisibility(View.GONE);
             setListAdapter(adapter);
-
         }
-
     }
-
 }

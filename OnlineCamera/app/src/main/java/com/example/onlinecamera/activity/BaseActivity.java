@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.example.onlinecamera.CallMashapeAsync;
 import com.example.onlinecamera.fragment.CardListFragment;
 import com.example.onlinecamera.fragment.FilterFragment;
 import com.example.onlinecamera.R;

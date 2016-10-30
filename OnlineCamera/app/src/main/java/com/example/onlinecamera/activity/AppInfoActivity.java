@@ -37,6 +37,17 @@ public class AppInfoActivity extends AppCompatActivity {
 
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                //NavUtils.navigateUpFromSameTask(this);
+                return true;
 
+        }
+        return true;
+    }
 }
