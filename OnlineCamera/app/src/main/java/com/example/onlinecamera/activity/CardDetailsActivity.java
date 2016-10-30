@@ -1,8 +1,11 @@
 package com.example.onlinecamera.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +26,6 @@ public class CardDetailsActivity extends AppCompatActivity {
     private FragmentTransaction ft;
 
     JSONArray webcams;
-    Integer id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class CardDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String jsonArray = intent.getStringExtra("webcams");
-        Integer id =intent.getIntExtra("id",0);
+        Integer id = intent.getIntExtra("id", 0);
         if (null != jsonArray) {
             try {
                 webcams = new JSONArray(jsonArray);
@@ -49,7 +51,7 @@ public class CardDetailsActivity extends AppCompatActivity {
         cameraListFragment = new CameraListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("webcams", webcams.toString());
-        bundle.putInt("id",id);
+        bundle.putInt("id", id);
         cameraListFragment.setArguments(bundle);
 
 
@@ -81,11 +83,18 @@ public class CardDetailsActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_coord:
-                if (null==webcams) break;
+                if (!isOnline()){
+                    Intent intent = new Intent(this, ErrorActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    return true;
+                }
+
+                if (null == webcams) break;
                 try {
                     String latitude = webcams.getJSONObject(0).getJSONObject("location").get("latitude").toString();
                     String longitude = webcams.getJSONObject(0).getJSONObject("location").get("longitude").toString();
-                    String uri = "geo:"+ latitude + "," + longitude;
+                    String uri = "geo:" + latitude + "," + longitude;
                     startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -93,10 +102,17 @@ public class CardDetailsActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 onBackPressed();
-                //NavUtils.navigateUpFromSameTask(this);
                 return true;
 
         }
         return true;
+    }
+
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.onlinecamera.R;
-import com.example.onlinecamera.activity.BaseActivity;
 
 public class PreloaderActivity extends AppCompatActivity {
 

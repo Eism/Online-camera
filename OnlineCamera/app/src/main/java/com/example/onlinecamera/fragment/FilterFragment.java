@@ -6,66 +6,118 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.onlinecamera.R;
+import com.example.onlinecamera.activity.BaseActivity;
 
 /**
  * Created by ELNUR on 21.10.2016.
  */
 
-public class FilterFragment extends Fragment{
+public class FilterFragment extends Fragment {
 
-    private Button btAll,btFilter1,btFilter2,btFilter3;
+    private Button btAll, btFilter1, btFilter2, btFilter3;
+
+    private Integer id = 0;
+
+    private BaseActivity context;
+
+    public void setContex(BaseActivity context) {
+        this.context = context;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.fragment_filter, null);
+        View v = inflater.inflate(R.layout.fragment_filter, null);
 
-        btAll=(Button) v.findViewById(R.id.buttonAll);
-        btFilter1=(Button) v.findViewById(R.id.buttonFilter1);
-        btFilter2=(Button) v.findViewById(R.id.buttonFilter2);
-        btFilter3=(Button) v.findViewById(R.id.buttonFilter3);
+        btAll = (Button) v.findViewById(R.id.buttonAll);
+        btFilter1 = (Button) v.findViewById(R.id.buttonFilter1);
+        btFilter2 = (Button) v.findViewById(R.id.buttonFilter2);
+        btFilter3 = (Button) v.findViewById(R.id.buttonFilter3);
 
+
+        Bundle bundle = this.getArguments();
+        Integer buttonID = bundle.getInt("id");
+        if (null != buttonID) {
+            switch (buttonID) {
+                case 0:
+                    btAll.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                    break;
+                case 1:
+                    btFilter1.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                    break;
+                case 2:
+                    btFilter2.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                    break;
+                case 3:
+                    btFilter3.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                    break;
+            }
+        }
 
         btAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),
-                        btAll.getText(),
-                        Toast.LENGTH_LONG).show();
+                if (0 != id) {
+                    id = 0;
+                    context.changeListFragment(id);
+                    btAll.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                    btFilter1.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter2.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter3.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                }
+                context.removeFilterFragment();
+
             }
         });
 
         btFilter1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),
-                        btFilter1.getText(),
-                        Toast.LENGTH_LONG).show();
+                if (1 != id) {
+                    id = 1;
+                    context.changeListFragment(id);
+                    btAll.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter1.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                    btFilter2.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter3.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                }
+                context.removeFilterFragment();
             }
         });
 
         btFilter2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),
-                        btFilter2.getText(),
-                        Toast.LENGTH_LONG).show();
+                if (2 != id) {
+                    id = 2;
+                    context.changeListFragment(id);
+                    btAll.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter1.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter2.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                    btFilter3.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                }
+                context.removeFilterFragment();
             }
         });
 
         btFilter3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),
-                        btFilter3.getText(),
-                        Toast.LENGTH_LONG).show();
+                if (3 != id) {
+                    id = 3;
+                    context.changeListFragment(id);
+                    btAll.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter1.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter2.setTextColor(getActivity().getResources().getColor(R.color.colorBlack87));
+                    btFilter3.setTextColor(getActivity().getResources().getColor(R.color.colorWhite));
+                }
+                context.removeFilterFragment();
             }
         });
 
-
         return v;
     }
+
 }

@@ -135,4 +135,35 @@
         android:textSize="16sp"
         android:textColor="@color/colorWhite" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo"
+        android:id="@+id/imageView3"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:text="www.appkode.ru"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_above="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/textView14"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:text="Сделано с любовью для конкурса «Запили-ка»"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_above="@+id/textView14"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView15"
+        android:textSize="14sp"
+        android:textColor="@color/colorWhite" />
+
 </RelativeLayout>

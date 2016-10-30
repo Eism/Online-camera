@@ -5,20 +5,15 @@ import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.example.onlinecamera.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 public class PlayerActivity extends AppCompatActivity {
 
-    WebView webView;
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +21,7 @@ public class PlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-
-        View decorView=getWindow().getDecorView();
+        View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -38,12 +32,12 @@ public class PlayerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("idCamera");
 
-        webView=(WebView) findViewById(R.id.webViewPlayer);
+        webView = (WebView) findViewById(R.id.webViewPlayer);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setPluginState(WebSettings.PluginState.ON);
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl("http://ru.webcams.travel/webcam/stream/"+id+"");
+        webView.loadUrl("http://ru.webcams.travel/webcam/stream/" + id + "");
     }
 
     @Override
@@ -54,11 +48,10 @@ public class PlayerActivity extends AppCompatActivity {
 
     public void destroyWebView() {
 
-        if(webView != null) {
+        if (webView != null) {
             webView.clearHistory();
             webView.clearCache(true);
             webView.loadUrl("about:blank");
         }
-
     }
 }

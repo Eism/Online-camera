@@ -20,7 +20,7 @@
             android:gravity="left|center"
             android:layout_marginLeft="16dp"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorBlack50"
             android:textSize="14sp" />
 
 
@@ -36,12 +36,11 @@
             android:gravity="left|center"
             android:fontFamily="sans-serif"
             android:textSize="16sp"
-            android:textColor="@color/colorWhite"
             android:background="@color/colorPrimary"
             android:textAllCaps="false" />
 
         <Button
-            android:text="Фильтр 1"
+            android:text="Активные"
             android:layout_width="match_parent"
             android:id="@+id/buttonFilter1"
             android:layout_height="48dp"
@@ -53,12 +52,11 @@
             android:layout_alignStart="@+id/buttonAll"
             android:fontFamily="sans-serif"
             android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:background="@color/colorPrimary"
             android:textAllCaps="false" />
 
         <Button
-            android:text="Фильтр 2"
+            android:text="A...Z"
             android:layout_width="match_parent"
             android:id="@+id/buttonFilter2"
             android:layout_height="48dp"
@@ -70,12 +68,11 @@
             android:layout_alignStart="@+id/buttonFilter1"
             android:fontFamily="sans-serif"
             android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:background="@color/colorPrimary"
             android:textAllCaps="false" />
 
         <Button
-            android:text="Фильтр 3"
+            android:text="Z...A"
             android:layout_width="match_parent"
             android:id="@+id/buttonFilter3"
             android:layout_height="48dp"
@@ -87,7 +84,6 @@
             android:layout_alignStart="@+id/buttonFilter2"
             android:fontFamily="sans-serif"
             android:textSize="16sp"
-            android:textColor="@color/colorBlack"
             android:background="@color/colorPrimary"
             android:textAllCaps="false" />
 
