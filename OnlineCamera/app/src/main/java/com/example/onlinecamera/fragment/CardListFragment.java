@@ -41,24 +41,25 @@ import java.util.TreeMap;
  */
 
 public class CardListFragment extends ListFragment {
-    public Boolean isLoading = true;
+    private Boolean error = false;  // флаг ошибки при загрузки данных с сайта
+    private Integer async = 0;  // нужна для определения завершения всех загрузок
 
-    private Boolean error = false;
-    private Integer async = 0;
+    private final JSONArray[] webcams = new JSONArray[4];   // все данные каммер с сайта
+                                                            // содержит в себе idCamera,title,image,location
 
-    private final JSONArray[] webcams1 = new JSONArray[4];
-
+    // массивы для заполнения карточек
     private String[] statusCard;
     private String[] titleCard;
     private String[] imageCard;
     private String[] otherInfoCard1;
     private String[] otherInfoCard2;
-    private Integer[] idCountry;
+
+    private Integer[] idCountry;    // содержит номера штатов для вывода в ListView
 
     private ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
     private SimpleAdapter adapter;
 
-    private ProgressBar loadProgressBar;
+    private ProgressBar loadProgressBar;    // пока грузятся данные с сайта
 
     private View v;
 
@@ -66,22 +67,11 @@ public class CardListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.card_list, container, false);
-        isLoading = true;
+
         loadProgressBar = (ProgressBar) v.findViewById(R.id.loadProgressBar);
         loadProgressBar.setVisibility(View.VISIBLE);
 
-        new CallMashapeAsync().execute();
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-
-
-                }
-            }
-        }).start();
+        new CallMashapeAsync().execute();   // соединение с сервисом Mashape, и загрузка данных
 
         return v;
     }
@@ -93,8 +83,8 @@ public class CardListFragment extends ListFragment {
         Integer ID = ((Long) id).intValue();
 
         Intent intent = new Intent(getActivity(), CardDetailsActivity.class);
-        intent.putExtra("webcams", webcams1[idCountry[ID]].toString());
-        intent.putExtra("id", ID);
+        intent.putExtra("webcams", webcams[idCountry[ID]].toString());  // отправляем выбранный штат
+        intent.putExtra("id", idCountry[ID]);   // отправляем ID штата
         startActivity(intent);
     }
 
@@ -109,10 +99,12 @@ public class CardListFragment extends ListFragment {
                 setList(4);
                 break;
             case 1:
-                for (int i = 0; i < webcams1.length; i++) {
+
+                // ищем активные камеры
+                for (int i = 0; i < webcams.length; i++) {
                     JSONObject jsonObject = null;
                     try {
-                        jsonObject = webcams1[i].getJSONObject(0);
+                        jsonObject = webcams[i].getJSONObject(0);
                         String status = jsonObject.get("status").toString();
                         if (status.equals("active")) {
                             idCountry[lenght++] = i;
@@ -128,10 +120,10 @@ public class CardListFragment extends ListFragment {
             case 2:
                 data = new HashMap<String, Integer>();
                 //в дальнейшем ускорить за счет друугой сортировки
-                for (int i = 0; i < webcams1.length; i++) {
+                for (int i = 0; i < webcams.length; i++) {
                     JSONObject jsonObject = null;
                     try {
-                        jsonObject = webcams1[i].getJSONObject(0);
+                        jsonObject = webcams[i].getJSONObject(0);
                         data.put(jsonObject.getJSONObject("location").get("region").toString().toLowerCase(), i);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -151,10 +143,10 @@ public class CardListFragment extends ListFragment {
             case 3:
                 data = new HashMap<String, Integer>();
                 //в дальнейшем ускорить за счет друугой сортировки
-                for (int i = 0; i < webcams1.length; i++) {
+                for (int i = 0; i < webcams.length; i++) {
                     JSONObject jsonObject = null;
                     try {
-                        jsonObject = webcams1[i].getJSONObject(0);
+                        jsonObject = webcams[i].getJSONObject(0);
                         data.put(jsonObject.getJSONObject("location").get("region").toString().toLowerCase(), i);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -162,11 +154,11 @@ public class CardListFragment extends ListFragment {
                 }
 
                 treeMap = new TreeMap<String, Integer>(data);
-                lenght = webcams1.length - 1;
+                lenght = webcams.length - 1;
                 for (Map.Entry<String, Integer> entry : treeMap.entrySet()) {
                     idCountry[lenght--] = entry.getValue();
                 }
-                setList(webcams1.length);
+                setList(webcams.length);
                 break;
         }
     }
@@ -175,6 +167,7 @@ public class CardListFragment extends ListFragment {
 
         protected Boolean doInBackground(String... msg) {
 
+            // асинхронная загрузка штатов MS,TX,WY,CO с разными параметрами
             Unirest.get("https://webcamstravel.p.mashape.com/webcams/list/property=live,hd/region=US.MS/limit=4,11?show=webcams:idCamera,title,image,location")
                     .header("X-Mashape-Key", "Fo4TeWno4vmshqokVApAI2DHB5aYp1u2kKvjsnyu1ZPsYirCD5")
                     .asJsonAsync(new Callback<JsonNode>() {
@@ -182,7 +175,7 @@ public class CardListFragment extends ListFragment {
                         public void completed(HttpResponse<JsonNode> httpResponse) {
 
                             try {
-                                webcams1[0] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams[0] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
                                 error = true;
                                 async++;
@@ -209,7 +202,7 @@ public class CardListFragment extends ListFragment {
                         @Override
                         public void completed(HttpResponse<JsonNode> httpResponse) {
                             try {
-                                webcams1[1] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams[1] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
                                 error = true;
                                 async++;
@@ -236,7 +229,7 @@ public class CardListFragment extends ListFragment {
                         @Override
                         public void completed(HttpResponse<JsonNode> httpResponse) {
                             try {
-                                webcams1[2] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams[2] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
                                 error = true;
                                 async++;
@@ -263,7 +256,7 @@ public class CardListFragment extends ListFragment {
                         @Override
                         public void completed(HttpResponse<JsonNode> httpResponse) {
                             try {
-                                webcams1[3] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
+                                webcams[3] = httpResponse.getBody().getObject().getJSONObject("result").optJSONArray("webcams");
                             } catch (JSONException e) {
                                 error = true;
                                 async++;
@@ -303,8 +296,8 @@ public class CardListFragment extends ListFragment {
                         for (int i = 0; i < 4; i++) {
                             idCountry[i] = i;
                             try {
-                                JSONObject jsonObject = webcams1[i].getJSONObject(0);
-                                statusCard[i] = jsonObject.get("status").toString();
+                                JSONObject jsonObject = webcams[i].getJSONObject(0);
+                                statusCard[l] = jsonObject.get("status").toString();
                                 titleCard[l] = jsonObject.getJSONObject("location").get("region").toString();
                                 imageCard[l] = jsonObject.getJSONObject("image").getJSONObject("current").get("preview").toString();
                                 otherInfoCard1[l] = jsonObject.getJSONObject("location").get("continent").toString();
@@ -327,15 +320,14 @@ public class CardListFragment extends ListFragment {
         protected void onPostExecute(Boolean response) {
 
             if (error) {
-                isLoading = false;
                 Intent intent = new Intent(getActivity(), ErrorActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             } else {
-
+                // загрузка превью для камер
                 //GetBitmapFromURL bitm = new GetBitmapFromURL();
                 //bitm.execute(imageCard);
-                setList(webcams1.length);
+                setList(webcams.length);
             }
         }
     }
@@ -366,8 +358,6 @@ public class CardListFragment extends ListFragment {
 
 
         adapter = new SimpleAdapter(getActivity(), data, R.layout.item_card_list, from, to);
-
-        isLoading = false;
 
         loadProgressBar.setVisibility(View.GONE);
 
@@ -423,8 +413,6 @@ public class CardListFragment extends ListFragment {
             int[] to = {R.id.statusCard, R.id.titleCard, R.id.imagePreviewCamera, R.id.adress, R.id.subAdress};
 
             adapter = new SimpleAdapter(getActivity(), data, R.layout.item_card_list, from, to);
-
-            isLoading = false;
 
             loadProgressBar.setVisibility(View.GONE);
             setListAdapter(adapter);

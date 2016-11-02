@@ -18,7 +18,7 @@ public class FilterFragment extends Fragment {
 
     private Button btAll, btFilter1, btFilter2, btFilter3;
 
-    private Integer id = 0;
+    private Integer id = 0; //выбранный фильтр
 
     private BaseActivity context;
 
@@ -36,7 +36,7 @@ public class FilterFragment extends Fragment {
         btFilter2 = (Button) v.findViewById(R.id.buttonFilter2);
         btFilter3 = (Button) v.findViewById(R.id.buttonFilter3);
 
-
+        // закрашиваем выбранный ранее фильтр
         Bundle bundle = this.getArguments();
         Integer buttonID = bundle.getInt("id");
         if (null != buttonID) {

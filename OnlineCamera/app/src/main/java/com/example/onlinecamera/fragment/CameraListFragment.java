@@ -29,9 +29,10 @@ import java.util.HashMap;
 
 public class CameraListFragment extends ListFragment {
 
-    private JSONArray webcams;
+    private JSONArray webcams;  // содержит все доступные видеокамеры для данного штата
     private Integer ID;
 
+    // массивы для вывода данных камер
     private String[] idCamera;
     private String[] statusCamera;
     private String[] titleCamera;
@@ -107,7 +108,7 @@ public class CameraListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        if (!isOnline()){
+        if (!isOnline()){   // проверка интернета
             Intent intent = new Intent(getActivity(), ErrorActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

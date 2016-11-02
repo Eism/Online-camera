@@ -18,15 +18,16 @@ public class BaseActivity extends AppCompatActivity {
 
     private FilterFragment filterFragment;
     private FragmentTransaction ft;
-    private Boolean isFilterVisible = false;
+    private Boolean isFilterVisible = false; //состояние фрагмента filter
 
     private CardListFragment cardListFragment;
-    private Integer filterButtonID = 0;
+    private Integer filterButtonID = 0; // номер выбранного фильтра
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
         Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.toolbal_actionbar);
         setSupportActionBar(mActionBarToolbar);
 
@@ -84,14 +85,15 @@ public class BaseActivity extends AppCompatActivity {
 
     public void changeListFragment(Integer id) {
         filterButtonID = id;
-        cardListFragment.changeList(id);
+        cardListFragment.changeList(id); // изменяем карточки в зависимости от фильтра
     }
 
     public void replaceFilterFragment() {
-        ListView listView = (ListView) findViewById(android.R.id.list);
         ft = getFragmentManager().beginTransaction();
 
-        listView.setEnabled(false);
+        ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setEnabled(false);     // убираем прокручивание
+
         ft.setCustomAnimations(R.anim.to_left, R.anim.to_right);
         ft.replace(R.id.contentFrag, filterFragment);
 
@@ -109,7 +111,7 @@ public class BaseActivity extends AppCompatActivity {
 
         ft.setCustomAnimations(R.anim.to_left, R.anim.to_right);
         ft.remove(filterFragment);
-        listView.setEnabled(true);
+        listView.setEnabled(true);     // возвращаем прокручивание
 
         isFilterVisible = !isFilterVisible;
         ft.commit();
