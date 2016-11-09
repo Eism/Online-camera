@@ -1,5 +1,6 @@
 package com.example.onlinecamera.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -15,8 +16,9 @@ public class ErrorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finishActivity(0);
-        finish();
-        moveTaskToBack(true);
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 }

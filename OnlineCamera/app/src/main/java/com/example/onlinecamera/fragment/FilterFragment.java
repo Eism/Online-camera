@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.onlinecamera.R;
 import com.example.onlinecamera.activity.BaseActivity;
@@ -16,7 +17,7 @@ import com.example.onlinecamera.activity.BaseActivity;
 
 public class FilterFragment extends Fragment {
 
-    private Button btAll, btFilter1, btFilter2, btFilter3;
+    private TextView btAll, btFilter1, btFilter2, btFilter3;
 
     private Integer id = 0; //выбранный фильтр
 
@@ -31,10 +32,10 @@ public class FilterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_filter, null);
 
-        btAll = (Button) v.findViewById(R.id.buttonAll);
-        btFilter1 = (Button) v.findViewById(R.id.buttonFilter1);
-        btFilter2 = (Button) v.findViewById(R.id.buttonFilter2);
-        btFilter3 = (Button) v.findViewById(R.id.buttonFilter3);
+        btAll = (TextView) v.findViewById(R.id.buttonAll);
+        btFilter1 = (TextView) v.findViewById(R.id.buttonFilter1);
+        btFilter2 = (TextView) v.findViewById(R.id.buttonFilter2);
+        btFilter3 = (TextView) v.findViewById(R.id.buttonFilter3);
 
         // закрашиваем выбранный ранее фильтр
         Bundle bundle = this.getArguments();

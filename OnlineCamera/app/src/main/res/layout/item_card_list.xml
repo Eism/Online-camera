@@ -37,7 +37,8 @@
         android:layout_below="@+id/titleCard"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:id="@+id/imagePreviewCamera" />
+        android:id="@+id/imagePreviewCamera"
+        android:scaleType="fitXY"/>
 
     <ImageView
         android:layout_width="wrap_content"

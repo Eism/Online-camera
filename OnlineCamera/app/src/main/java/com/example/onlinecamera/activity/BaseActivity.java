@@ -17,7 +17,7 @@ import com.example.onlinecamera.R;
 public class BaseActivity extends AppCompatActivity {
 
     private FilterFragment filterFragment;
-    private FragmentTransaction ft;
+    //private FragmentTransaction ft;
     private Boolean isFilterVisible = false; //состояние фрагмента filter
 
     private CardListFragment cardListFragment;
@@ -36,7 +36,7 @@ public class BaseActivity extends AppCompatActivity {
 
         cardListFragment = new CardListFragment();
 
-        ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.contentCard, cardListFragment);
         ft.commit();
 
@@ -89,11 +89,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void replaceFilterFragment() {
-        ft = getFragmentManager().beginTransaction();
-
         ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setEnabled(false);     // убираем прокручивание
+        isFilterVisible = true;
 
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.to_left, R.anim.to_right);
         ft.replace(R.id.contentFrag, filterFragment);
 
@@ -101,19 +101,18 @@ public class BaseActivity extends AppCompatActivity {
         bundle.putInt("id", filterButtonID);
         filterFragment.setArguments(bundle);
 
-        isFilterVisible = !isFilterVisible;
         ft.commit();
     }
 
     public void removeFilterFragment() {
         ListView listView = (ListView) findViewById(android.R.id.list);
-        ft = getFragmentManager().beginTransaction();
+        listView.setEnabled(true);     // возвращаем прокручивание
+        isFilterVisible = false;
 
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.to_left, R.anim.to_right);
         ft.remove(filterFragment);
-        listView.setEnabled(true);     // возвращаем прокручивание
 
-        isFilterVisible = !isFilterVisible;
         ft.commit();
     }
 

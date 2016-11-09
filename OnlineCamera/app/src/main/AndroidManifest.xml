@@ -16,13 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
 
-        <activity android:name=".activity.BaseActivity">
+        <activity android:name=".activity.BaseActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.PreloaderActivity">
+        <activity android:name=".activity.PreloaderActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +32,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.AppInfoActivity">
+        <activity android:name=".activity.AppInfoActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.onlinecamera.activity.BaseActivity" />
@@ -39,20 +42,23 @@
         <activity
             android:name=".activity.CardDetailsActivity"
             android:hardwareAccelerated="true"
-            android:configChanges="keyboardHidden|orientation">
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.onlinecamera.activity.BaseActivity" />
         </activity>
 
-        <activity android:name=".activity.ErrorActivity">
+        <activity android:name=".activity.ErrorActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
         <activity android:name=".activity.PlayerActivity"
-            android:configChanges="keyboardHidden|orientation">
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
         </activity>
 
     </application>

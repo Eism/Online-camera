@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="304dp"
     android:layout_height="match_parent"
-    tools:context="com.example.onlinecamera.Filter1Fragment"
     android:background="@color/colorPrimary">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="304dp"
         android:layout_height="match_parent">
 
         <TextView
@@ -24,7 +23,7 @@
             android:textSize="14sp" />
 
 
-        <Button
+        <TextView
             android:text="Все"
             android:layout_width="match_parent"
             android:id="@+id/buttonAll"
@@ -39,7 +38,7 @@
             android:background="@color/colorPrimary"
             android:textAllCaps="false" />
 
-        <Button
+        <TextView
             android:text="Активные"
             android:layout_width="match_parent"
             android:id="@+id/buttonFilter1"
@@ -55,7 +54,7 @@
             android:background="@color/colorPrimary"
             android:textAllCaps="false" />
 
-        <Button
+        <TextView
             android:text="A...Z"
             android:layout_width="match_parent"
             android:id="@+id/buttonFilter2"
@@ -71,15 +70,13 @@
             android:background="@color/colorPrimary"
             android:textAllCaps="false" />
 
-        <Button
+        <TextView
             android:text="Z...A"
             android:layout_width="match_parent"
             android:id="@+id/buttonFilter3"
             android:layout_height="48dp"
             android:gravity="left|center"
             android:layout_below="@+id/buttonFilter2"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignLeft="@+id/buttonFilter2"
             android:layout_alignStart="@+id/buttonFilter2"
             android:fontFamily="sans-serif"
@@ -109,7 +106,8 @@
             tools:ignore="VectorDrawableCompat"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:scaleType="fitXY"/>
 
     </RelativeLayout>
 
